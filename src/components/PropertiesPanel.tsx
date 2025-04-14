@@ -21,13 +21,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ColorPicker } from "./ColorPicker";
-import { FontFamilyPicker } from "./FontFamilyPicker";
-import { AlignmentControls } from "./AlignmentControls";
-import { SpacingControls } from "./SpacingControls";
-import { ImageControls } from "./ImageControls";
-import { TextStyleControls } from "./TextStyleControls";
-import { LayoutControls } from "./LayoutControls";
 import { ChevronLeft, X, Copy, Trash } from "lucide-react";
 
 interface PropertiesPanelProps {
@@ -37,6 +30,7 @@ interface PropertiesPanelProps {
     properties: any;
   };
   onClose?: () => void;
+  onBack?: () => void;
   onPropertyChange?: (id: string, property: string, value: any) => void;
   onDeleteElement?: (id: string) => void;
   onDuplicateElement?: (id: string) => void;
@@ -48,7 +42,12 @@ const PropertiesPanel = ({
     id: "",
     properties: {},
   },
-  onClose = () => {},
+  onClose = () => {
+    console.log("Closing properties panel");
+  },
+  onBack = () => {
+    console.log("Going back from properties panel");
+  },
   onPropertyChange = () => {},
   onDeleteElement = () => {},
   onDuplicateElement = () => {},
@@ -397,7 +396,7 @@ const PropertiesPanel = ({
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" onClick={onClose}>
+            <Button variant="ghost" size="icon" onClick={onBack}>
               <ChevronLeft className="h-4 w-4" />
             </Button>
             <h3 className="font-medium capitalize">

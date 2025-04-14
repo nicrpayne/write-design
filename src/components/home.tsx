@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -24,6 +25,7 @@ import {
 import TemplateGallery from "./TemplateGallery";
 
 const Home = () => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
 
   // Mock data for drafts
@@ -101,7 +103,7 @@ const Home = () => {
               <Settings className="mr-2 h-4 w-4" />
               Settings
             </Button>
-            <Button size="sm">
+            <Button size="sm" onClick={() => navigate("/editor/new")}>
               <PlusCircle className="mr-2 h-4 w-4" />
               New Article
             </Button>
@@ -141,7 +143,10 @@ const Home = () => {
 
           <TabsContent value="drafts" className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <Card className="bg-primary/5 border-dashed cursor-pointer hover:bg-primary/10 transition-colors">
+              <Card
+                className="bg-primary/5 border-dashed cursor-pointer hover:bg-primary/10 transition-colors"
+                onClick={() => navigate("/editor/new")}
+              >
                 <CardContent className="flex flex-col items-center justify-center h-[220px]">
                   <PlusCircle className="h-10 w-10 text-primary mb-4" />
                   <p className="text-lg font-medium">Create New Article</p>

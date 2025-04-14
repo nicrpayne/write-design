@@ -1,18 +1,32 @@
-import { Suspense } from "react";
+import { Suspense, lazy } from "react";
 import { useRoutes, Routes, Route } from "react-router-dom";
 import Home from "./components/home";
 import routes from "tempo-routes";
 
+// Lazy load the editor page for better performance
+const EditorPage = lazy(() => import("./components/EditorPage"));
+
 function App() {
   return (
-    <Suspense fallback={<p>Loading...</p>}>
-      <>
-        <Routes>
-          <Route path="/" element={<Home />} />
-        </Routes>
-        {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
-      </>
-    </Suspense>
+    <>
+      {/* Main application routes */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/editor/:id"
+          element={
+            <Suspense fallback={<p>Loading...</p>}>
+              <EditorPage />
+            </Suspense>
+          }
+        />
+        {/* Add the tempobook route for Tempo to work properly */}
+        {import.meta.env.VITE_TEMPO === "true" && <Route path="/tempobook/*" />}
+      </Routes>
+
+      {/* Tempo routes for storyboards */}
+      {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
+    </>
   );
 }
 
